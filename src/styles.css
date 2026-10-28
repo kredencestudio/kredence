@@ -1,0 +1,269 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-teal: var(--teal);
+  --color-teal-soft: var(--teal-soft);
+  --color-charcoal: var(--charcoal);
+  --color-paper: var(--paper);
+  --color-paper-dim: var(--paper-dim);
+  --font-display: var(--font-display);
+  --font-mono: var(--font-mono);
+  --font-body: var(--font-body);
+  --shadow-paper: 0 10px 24px -12px color-mix(in oklab, var(--charcoal) 45%, transparent);
+  --shadow-lift: 0 22px 44px -18px color-mix(in oklab, var(--charcoal) 55%, transparent);
+  --shadow-sticker: 3px 4px 0 var(--charcoal);
+}
+
+:root {
+  --radius: 0.5rem;
+
+  /* brand */
+  --teal: oklch(0.762 0.083 214.5); /* #64becf */
+  --teal-soft: oklch(0.92 0.035 214.5);
+  --charcoal: oklch(0.35 0 0); /* #363636 */
+  --paper: oklch(0.977 0.006 95); /* #faf9f6 */
+  --paper-dim: oklch(0.945 0.008 95);
+
+  --background: var(--paper);
+  --foreground: var(--charcoal);
+  --card: oklch(1 0 0);
+  --card-foreground: var(--charcoal);
+  --popover: oklch(1 0 0);
+  --popover-foreground: var(--charcoal);
+  --primary: var(--teal);
+  --primary-foreground: var(--charcoal);
+  --secondary: var(--paper-dim);
+  --secondary-foreground: var(--charcoal);
+  --muted: var(--paper-dim);
+  --muted-foreground: oklch(0.55 0 0);
+  --accent: var(--teal-soft);
+  --accent-foreground: var(--charcoal);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.984 0.003 247.858);
+  --border: color-mix(in oklab, var(--charcoal) 18%, transparent);
+  --input: color-mix(in oklab, var(--charcoal) 20%, transparent);
+  --ring: var(--teal);
+
+  --font-display: "Oswald", "Arial Narrow", sans-serif;
+  --font-mono: "Space Mono", ui-monospace, monospace;
+  --font-body: "Jost", system-ui, sans-serif;
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-body);
+    overflow-x: hidden;
+  }
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    line-height: 0.92;
+  }
+  ::selection {
+    background: var(--teal);
+    color: var(--charcoal);
+  }
+}
+
+/* ---------- texture ---------- */
+@utility paper-grain {
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.35;
+    background-image: radial-gradient(
+      color-mix(in oklab, var(--charcoal) 12%, transparent) 1px,
+      transparent 1px
+    );
+    background-size: 18px 18px;
+  }
+}
+
+@utility grid-lines {
+  background-image:
+    linear-gradient(to right, color-mix(in oklab, var(--charcoal) 7%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in oklab, var(--charcoal) 7%, transparent) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
+/* ---------- collage primitives ---------- */
+@utility tape {
+  position: relative;
+  &::before {
+    content: "";
+    position: absolute;
+    top: -0.75rem;
+    left: 50%;
+    width: 5.5rem;
+    height: 1.4rem;
+    translate: -50% 0;
+    rotate: -4deg;
+    background: color-mix(in oklab, var(--teal) 55%, transparent);
+    box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--charcoal) 12%, transparent);
+  }
+}
+
+@utility sticker {
+  border: 2px solid var(--charcoal);
+  box-shadow: var(--shadow-sticker);
+  background: var(--paper);
+  transition:
+    transform 0.22s cubic-bezier(0.2, 0.9, 0.3, 1.4),
+    box-shadow 0.22s ease,
+    background 0.22s ease;
+  &:hover {
+    transform: translate(-2px, -3px) rotate(-1.5deg);
+    box-shadow: 6px 8px 0 var(--charcoal);
+  }
+}
+
+@utility ghost-text {
+  position: relative;
+  &::before {
+    content: attr(data-ghost);
+    position: absolute;
+    left: -0.12em;
+    top: 0.1em;
+    color: color-mix(in oklab, var(--teal) 60%, transparent);
+    z-index: -1;
+    pointer-events: none;
+  }
+}
+
+@utility nav-link {
+  position: relative;
+  transition: color 0.2s ease;
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    height: 2px;
+    width: 100%;
+    background: var(--teal);
+    scale: 0 1;
+    transform-origin: left;
+    transition: scale 0.28s cubic-bezier(0.2, 0.9, 0.3, 1.2);
+  }
+  &:hover {
+    color: var(--teal);
+  }
+  &:hover::after {
+    scale: 1 1;
+  }
+}
+
+@utility marker-underline {
+  background-image: linear-gradient(
+    to top,
+    color-mix(in oklab, var(--teal) 85%, transparent) 0 38%,
+    transparent 38%
+  );
+  padding-inline: 0.08em;
+}
+
+/* ---------- reveal ---------- */
+@utility reveal {
+  opacity: 0;
+  transform: translateY(28px) rotate(var(--reveal-rot, -1deg));
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s cubic-bezier(0.2, 0.8, 0.25, 1);
+  &.is-in {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes float-slow {
+  0%,
+  100% {
+    transform: translateY(0) rotate(var(--r, 0deg));
+  }
+  50% {
+    transform: translateY(-14px) rotate(calc(var(--r, 0deg) + 2deg));
+  }
+}
+@utility floaty {
+  animation: float-slow 6s ease-in-out infinite;
+}
+
+@keyframes marquee-x {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+@utility marquee-track {
+  animation: marquee-x 26s linear infinite;
+  &:hover {
+    animation-play-state: paused;
+  }
+}
+
+@keyframes wiggle {
+  0%,
+  100% {
+    rotate: -2deg;
+  }
+  50% {
+    rotate: 2deg;
+  }
+}
+@utility wiggle-hover {
+  transition: transform 0.2s ease;
+  &:hover {
+    animation: wiggle 0.35s ease-in-out 2;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
